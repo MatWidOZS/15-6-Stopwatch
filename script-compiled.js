@@ -93,7 +93,7 @@ var Stopwatch = function () {
 		value: function clear() {
 			var resultsList = document.getElementById('ul');
 			if (resultsList.lastChild) {
-				resultsList.removeChild(resultsList.lastChild);
+				resultsList.innerHTML = '';
 			}
 		}
 	}]);
