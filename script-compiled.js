@@ -56,7 +56,7 @@ var Stopwatch = function () {
 		key: 'calculate',
 		value: function calculate() {
 			this.times.miliseconds += 1;
-			if (this.miliseconds >= 100) {
+			if (this.times.miliseconds >= 100) {
 				this.times.seconds += 1;
 				this.times.miliseconds = 0;
 			}
@@ -71,6 +71,31 @@ var Stopwatch = function () {
 			this.running = false;
 			clearInterval(this.watch);
 		}
+	}, {
+		key: 'resetWatch',
+		value: function resetWatch() {
+			this.reset();
+			this.print();
+		}
+	}, {
+		key: 'save',
+		value: function save() {
+			var resultsList = document.getElementById('ul');
+			var resultsItem = document.createElement('li');
+			var result = this.format(this.times);
+
+			resultsItem.innerHTML = result;
+			resultsItem.setAttribute('id', 'item');
+			resultsList.appendChild(resultsItem);
+		}
+	}, {
+		key: 'clear',
+		value: function clear() {
+			var resultsList = document.getElementById('ul');
+			if (resultsList.lastChild) {
+				resultsList.removeChild(resultsList.lastChild);
+			}
+		}
 	}]);
 
 	return Stopwatch;
@@ -82,9 +107,9 @@ function pad0(value) {
 		result = '0' + result;
 	}
 	return result;
-};
+}
 
-var stopwatch = new Stopwatch(document.querySelector('stopwatch'));
+var stopwatch = new Stopwatch(document.querySelector('.stopwatch'));
 
 var startButton = document.getElementById('start');
 startButton.addEventListener('click', function () {
@@ -94,4 +119,19 @@ startButton.addEventListener('click', function () {
 var stopButton = document.getElementById('stop');
 stopButton.addEventListener('click', function () {
 	return stopwatch.stop();
+});
+
+var resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', function () {
+	return stopwatch.resetWatch();
+});
+
+var saveButton = document.getElementById('save');
+saveButton.addEventListener('click', function () {
+	return stopwatch.save();
+});
+
+var clearButton = document.getElementById('clear');
+clearButton.addEventListener('click', function () {
+	return stopwatch.clear();
 });

@@ -25,7 +25,7 @@ class Stopwatch {
 	start() {
 		if (!this.running) {
 			this.running = true;
-			this.watch = setInterval( () => this.step(), 10);
+			this.watch = setInterval(() => this.step(), 10);
 		}
 	}
 
@@ -37,7 +37,7 @@ class Stopwatch {
 
 	calculate() {
 		this.times.miliseconds += 1;
-		if (this.miliseconds >= 100) {
+		if (this.times.miliseconds >= 100) {
 			this.times.seconds += 1;
 			this.times.miliseconds = 0;
 		}
@@ -51,6 +51,29 @@ class Stopwatch {
 		this.running = false;
 		clearInterval(this.watch);
 	}
+
+	resetWatch() {
+		this.reset();
+		this.print();
+	}
+
+	save() {
+		const resultsList = document.getElementById('ul');
+		const resultsItem = document.createElement('li');
+		let result = this.format(this.times);
+
+		resultsItem.innerHTML = result;
+		resultsItem.setAttribute('id', 'item');
+		resultsList.appendChild(resultsItem);
+	}
+
+	clear() {
+		const resultsList = document.getElementById('ul');
+		if(resultsList.lastChild) {
+			resultsList.removeChild(resultsList.lastChild);
+		}
+	}
+
 }
 
 function pad0(value) {
@@ -59,7 +82,7 @@ function pad0(value) {
 				result = '0' + result;
 			}
 			return result;
-};
+}
 
 const stopwatch = new Stopwatch(
 	document.querySelector('.stopwatch'));
@@ -69,3 +92,12 @@ startButton.addEventListener('click', () => stopwatch.start());
 
 let stopButton = document.getElementById('stop');
 stopButton.addEventListener('click', () => stopwatch.stop());
+
+let resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', () => stopwatch.resetWatch());
+
+let saveButton = document.getElementById('save');
+saveButton.addEventListener('click', () => stopwatch.save());
+
+let clearButton = document.getElementById('clear');
+clearButton.addEventListener('click', () => stopwatch.clear());
