@@ -70,7 +70,7 @@ class Stopwatch {
 	clear() {
 		const resultsList = document.getElementById('ul');
 		if(resultsList.lastChild) {
-			resultsList.removeChild(resultsList.lastChild);
+			resultsList.innerHTML = '';
 		}
 	}
 
